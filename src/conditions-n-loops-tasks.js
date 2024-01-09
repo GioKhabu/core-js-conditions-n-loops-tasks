@@ -279,8 +279,14 @@ function isPalindrome(str) {
  *  'qwerty', 'Q'     => -1
  *  'qwerty', 'p'     => -1
  */
-function getIndexOf(/* str, letter */) {
-  throw new Error('Not implemented');
+function getIndexOf(str, letter) {
+  let num = -1;
+  for (let i = 0; i <= str.length; i += 1) {
+    if (str[i] === letter) {
+      num = i;
+    }
+  }
+  return num;
 }
 
 /**
@@ -298,8 +304,14 @@ function getIndexOf(/* str, letter */) {
  *  12345, 0    => false
  *  12345, 6    => false
  */
-function isContainNumber(/* num, digit */) {
-  throw new Error('Not implemented');
+function isContainNumber(num, digit) {
+  let checked = false;
+  for (let i = 0; i <= String(num).length; i += 1) {
+    if (String(num)[i] === String(digit)) {
+      checked = true;
+    }
+  }
+  return checked;
 }
 
 /**
@@ -340,8 +352,39 @@ function getBalanceIndex(/* arr */) {
  *          [10, 9,  8,  7]
  *        ]
  */
-function getSpiralMatrix(/* size */) {
-  throw new Error('Not implemented');
+function getSpiralMatrix(size) {
+  let results = [];
+  for (let i = 0; i < size; i += 1) {
+    results = [...results, []];
+  }
+  let counter = 1;
+  let startColumn = 0;
+  let endColumn = size - 1;
+  let startRow = 0;
+  let endRow = size - 1;
+  while (startColumn <= endColumn && startRow <= endRow) {
+    for (let i = startColumn; i <= endColumn; i += 1) {
+      results[startRow][i] = counter;
+      counter += 1;
+    }
+    startRow += 1;
+    for (let i = startRow; i <= endRow; i += 1) {
+      results[i][endColumn] = counter;
+      counter += 1;
+    }
+    endColumn -= 1;
+    for (let i = endColumn; i >= startColumn; i -= 1) {
+      results[endRow][i] = counter;
+      counter += 1;
+    }
+    endRow -= 1;
+    for (let i = endRow; i >= startRow; i -= 1) {
+      results[i][startColumn] = counter;
+      counter += 1;
+    }
+    startColumn += 1;
+  }
+  return results;
 }
 
 /**
@@ -359,8 +402,23 @@ function getSpiralMatrix(/* size */) {
  *    [7, 8, 9]         [9, 6, 3]
  *  ]                 ]
  */
-function rotateMatrix(/* matrix */) {
-  throw new Error('Not implemented');
+function rotateMatrix(matrix) {
+  let left = 0;
+  const matrix1 = [...matrix];
+  let right = matrix1.length - 1;
+  while (left < right) {
+    for (let i = 0; i < right - left; i += 1) {
+      const top = left;
+      const bottom = right;
+      const topLeft = matrix1[top][left + i];
+      matrix1[top][left + i] = matrix1[bottom - i][left];
+      matrix1[bottom - i][left] = matrix1[bottom][right - i];
+      matrix1[bottom][right - i] = matrix1[top + i][right];
+      matrix1[top + i][right] = topLeft;
+    }
+    left += 1;
+    right -= 1;
+  }
 }
 
 /**
