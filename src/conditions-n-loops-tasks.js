@@ -69,8 +69,15 @@ function getMaxNumber(a, b, c) {
  * {x: 1, y: 1}, {x: 2, y: 8} => false
  * {x: 1, y: 1}, {x: 2, y: 8} => false
  */
-function canQueenCaptureKing(/* queen, king */) {
-  throw new Error('Not implemented');
+function canQueenCaptureKing(queen, king) {
+  const { x: qR, y: qC } = queen;
+  const { x: kR, y: kC } = king;
+  if (qR === kR) return true;
+
+  if (qC === kC) return true;
+
+  if (Math.abs(qR - kR) === Math.abs(qC - kC)) return true;
+  return false;
 }
 
 /**
@@ -327,8 +334,31 @@ function isContainNumber(num, digit) {
  *  [2, 3, 9, 5] => 2       => 2 + 3 === 5 then balance element is 9 and its index = 2
  *  [1, 2, 3, 4, 5] => -1   => no balance element
  */
-function getBalanceIndex(/* arr */) {
-  throw new Error('Not implemented');
+function getBalanceIndex(arr) {
+  let index3 = -1;
+  function sumLeft(arr1, n, index) {
+    let sum = 0;
+    for (let i = 0; i < index; i += 1) {
+      sum += arr1[i];
+    }
+    return sum;
+  }
+  function sumRight(arr2, n, index) {
+    let sum = 0;
+    for (let i = index + 1; i < n; i += 1) {
+      sum += arr2[i];
+    }
+    return sum;
+  }
+  const n = arr.length;
+  for (let i = 0; i < n; i += 1) {
+    const suml = sumLeft(arr, n, i);
+    const sumr = sumRight(arr, n, i);
+    if (suml === sumr) {
+      index3 = i;
+    }
+  }
+  return index3;
 }
 
 /**
