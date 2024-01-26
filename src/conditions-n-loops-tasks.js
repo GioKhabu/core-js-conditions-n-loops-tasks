@@ -465,8 +465,30 @@ function rotateMatrix(matrix) {
  *  [2, 9, 5, 9]    => [2, 5, 9, 9]
  *  [-2, 9, 5, -3]  => [-3, -2, 5, 9]
  */
-function sortByAsc(/* arr */) {
-  throw new Error('Not implemented');
+function quickSort(arr) {
+  if (arr.length < 2) return arr;
+
+  const pivot = arr[arr.length - 1];
+  const leftArr = [];
+  const rightArr = [];
+  let leftIndex = -1;
+  let rightIndex = -1;
+  for (let i = 0; i < arr.length - 1; i += 1) {
+    if (arr[i] < pivot) {
+      leftArr[(leftIndex += 1)] = arr[i];
+    } else {
+      rightArr[(rightIndex += 1)] = arr[i];
+    }
+  }
+  return [...quickSort(leftArr), pivot, ...quickSort(rightArr)];
+}
+function sortByAsc(arr) {
+  const arr2 = arr;
+  const sortedArr = quickSort(arr);
+  for (let i = 0; i < sortedArr.length; i += 1) {
+    arr2[i] = sortedArr[i];
+  }
+  return arr2;
 }
 
 /**
@@ -487,24 +509,19 @@ function sortByAsc(/* arr */) {
  *  'qwerty', 3 => 'qetwry' => 'qtrewy' => 'qrwtey'
  */
 function shuffleChar(str, iterations) {
-  let result = str;
-
-  for (let i = 0; i < iterations; i += 1) {
-    let evenChars = '';
+  let shuffledStr = str;
+  for (let i = 1; i <= iterations; i += 1) {
     let oddChars = '';
-
-    for (let j = 0; j < result.length; j += 1) {
-      if (j % 2 === 0) {
-        evenChars += result[j];
-      } else {
-        oddChars += result[j];
-      }
+    let evenChars = '';
+    for (let j = 0; j < str.length; j += 1) {
+      const isEven = j % 2 === 0;
+      if (isEven) evenChars += shuffledStr[j];
+      else oddChars += shuffledStr[j];
     }
-
-    result = evenChars + oddChars;
+    shuffledStr = evenChars + oddChars;
+    if (shuffledStr === str) return shuffleChar(str, iterations % i);
   }
-
-  return result;
+  return shuffledStr;
 }
 
 /**
